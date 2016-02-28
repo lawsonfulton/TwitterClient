@@ -13,7 +13,22 @@ public class User implements Parcelable {
     private String name;
     private String screenName;
     private String profileImageUrl;
+    private String tagLine;
+    private int followersCount;
+    private int followingCount;
     private long uid;
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public int getFollowingCount() {
+        return followingCount;
+    }
 
     public String getName() {
         return name;
@@ -39,6 +54,9 @@ public class User implements Parcelable {
             user.screenName = jsonObject.getString("screen_name");
             user.profileImageUrl = jsonObject.getString("profile_image_url");
             user.uid = jsonObject.getLong("id");
+            user.tagLine = jsonObject.getString("description");
+            user.followersCount = jsonObject.getInt("followers_count");
+            user.followingCount = jsonObject.getInt("friends_count");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -47,6 +65,9 @@ public class User implements Parcelable {
     }
 
     //----- Parcelable Methods
+
+    public User() {
+    }
 
     @Override
     public int describeContents() {
@@ -58,16 +79,19 @@ public class User implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.screenName);
         dest.writeString(this.profileImageUrl);
+        dest.writeString(this.tagLine);
+        dest.writeInt(this.followersCount);
+        dest.writeInt(this.followingCount);
         dest.writeLong(this.uid);
-    }
-
-    public User() {
     }
 
     protected User(Parcel in) {
         this.name = in.readString();
         this.screenName = in.readString();
         this.profileImageUrl = in.readString();
+        this.tagLine = in.readString();
+        this.followersCount = in.readInt();
+        this.followingCount = in.readInt();
         this.uid = in.readLong();
     }
 
